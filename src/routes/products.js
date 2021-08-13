@@ -1,13 +1,14 @@
 const { Router } = require("express");
+
 const actualizarProducto = require("../controllers/actualizarProducto.contr.js");
 const { crearProducto } = require("../controllers/crearProducto.contr.js");
 const eliminarProducto = require("../controllers/eliminarProducto.contr.js");
-const router = Router();
-
 const {
   obtenerProductos,
   obtenerProductoPorId,
 } = require("../controllers/obtenerProductos.contr.js");
+
+const router = Router();
 
 //rutas gets
 router.get("/", obtenerProductos);
