@@ -8,10 +8,9 @@ const accesoUsuario = async (req, res) => {
     if (admin && password) {
       let admDb = await Administrador.findOne({ where: { admin, password } });
       if (admDb) {
-        jwt.sign({ password }, "secretKey", (err, token) => {
-          res.json({
-            token,
-          });
+        let token = jwt.sign({ password }, "secretKey");
+        res.json({
+          token,
         });
       } else {
         res.json({

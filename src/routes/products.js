@@ -7,6 +7,7 @@ const {
   obtenerProductos,
   obtenerProductoPorId,
 } = require("../controllers/obtenerProductos.contr.js");
+const midDelToken = require(".././controllers/funciones/comprobacionToken");
 
 const router = Router();
 
@@ -15,12 +16,12 @@ router.get("/", obtenerProductos);
 router.get("/:id", obtenerProductoPorId);
 
 //ruta post
-router.post("/", crearProducto);
+router.post("/", midDelToken, crearProducto);
 
 //ruta put
-router.put("/:id", actualizarProducto);
+router.put("/:id", midDelToken, actualizarProducto);
 
 //ruta delete
-router.delete("/:id", eliminarProducto);
+router.delete("/:id", midDelToken, eliminarProducto);
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const { Producto, Categoria } = require("../db.js");
+const jwt = require("jsonwebtoken");
 
 const actualizarProducto = async (req, res) => {
   try {
@@ -17,102 +18,110 @@ const actualizarProducto = async (req, res) => {
       categoria,
     } = req.body;
 
-    //si recibo id
-    if (id) {
-      let productoDb = await Producto.findOne({
-        where: { id },
-      });
-
-      //si no existe el producto en la DB
-      if (!productoDb) {
-        return res.json({
-          msg: "Este producto no existente",
+    jwt.verify(req.token, "secretKey", async (err, data) => {
+      if (err) {
+        res.json({
+          msg: "acceso denegado",
         });
-        //si existe el producto
       } else {
-        //si recibo categoria
-        if (categoria) {
-          //busco en la DB
-          let categoriaDb = await Categoria.findOne({
-            where: { nombre: categoria },
+        //si recibo id
+        if (id) {
+          let productoDb = await Producto.findOne({
+            where: { id },
           });
-          //si no existe la categoria en la DB
-          if (!categoriaDb) {
-            //creo la categoiria
-            let categoriaCreada = await Categoria.create({
-              nombre: categoria,
-            });
-            //actualizo el producto con la categoria recien creada
-            await Producto.update(
-              {
-                nombre,
-                descripcion,
-                precio,
-                decimal,
-                moneda,
-                foto,
-                estado,
-                tipoProducto,
-                fechaAlta,
-                categoriumId: categoriaCreada.id,
-              },
-              { where: { id } }
-            );
 
-            res.json({
-              msg: "Producto actualizado, y categoria creada correctamente",
+          //si no existe el producto en la DB
+          if (!productoDb) {
+            return res.json({
+              msg: "Este producto no existente",
             });
-            //si existe la categoria en la DB
+            //si existe el producto
           } else {
-            //actualizo el producto con la categoria ya existente
-            await Producto.update(
-              {
-                nombre,
-                descripcion,
-                precio,
-                decimal,
-                moneda,
-                foto,
-                estado,
-                tipoProducto,
-                fechaAlta,
-                categoriumId: categoriaDb.id,
-              },
-              { where: { id } }
-            );
+            //si recibo categoria
+            if (categoria) {
+              //busco en la DB
+              let categoriaDb = await Categoria.findOne({
+                where: { nombre: categoria },
+              });
+              //si no existe la categoria en la DB
+              if (!categoriaDb) {
+                //creo la categoiria
+                let categoriaCreada = await Categoria.create({
+                  nombre: categoria,
+                });
+                //actualizo el producto con la categoria recien creada
+                await Producto.update(
+                  {
+                    nombre,
+                    descripcion,
+                    precio,
+                    decimal,
+                    moneda,
+                    foto,
+                    estado,
+                    tipoProducto,
+                    fechaAlta,
+                    categoriumId: categoriaCreada.id,
+                  },
+                  { where: { id } }
+                );
 
-            res.json({
-              msg: "Producto actualizado correctamente",
-            });
+                res.json({
+                  msg: "Producto actualizado, y categoria creada correctamente",
+                });
+                //si existe la categoria en la DB
+              } else {
+                //actualizo el producto con la categoria ya existente
+                await Producto.update(
+                  {
+                    nombre,
+                    descripcion,
+                    precio,
+                    decimal,
+                    moneda,
+                    foto,
+                    estado,
+                    tipoProducto,
+                    fechaAlta,
+                    categoriumId: categoriaDb.id,
+                  },
+                  { where: { id } }
+                );
+
+                res.json({
+                  msg: "Producto actualizado correctamente",
+                });
+              }
+              //si no recibo la categoria
+            } else {
+              //actualizo el producto sin categoria asociada
+              await Producto.update(
+                {
+                  nombre,
+                  descripcion,
+                  precio,
+                  decimal,
+                  moneda,
+                  foto,
+                  estado,
+                  tipoProducto,
+                  fechaAlta,
+                },
+                { where: { id } }
+              );
+
+              res.json({
+                msg: "Producto actualizado correctamente",
+              });
+            }
           }
-          //si no recibo la categoria
         } else {
-          //actualizo el producto sin categoria asociada
-          await Producto.update(
-            {
-              nombre,
-              descripcion,
-              precio,
-              decimal,
-              moneda,
-              foto,
-              estado,
-              tipoProducto,
-              fechaAlta,
-            },
-            { where: { id } }
-          );
-
           res.json({
-            msg: "Producto actualizado correctamente",
+            msg: "Debe enviar el id del productio para actualizarlo",
           });
         }
       }
-    } else {
-      res.json({
-        msg: "Debe enviar el id del productio para actualizarlo",
-      });
-    }
+    });
   } catch (err) {
     console.log("No se pudo actualizar el producto", err);
   }
