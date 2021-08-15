@@ -10,7 +10,7 @@ const accesoUsuario = async (req, res) => {
       if (admDb) {
         let token = jwt.sign({ password }, "secretKey");
         res.json({
-          token,
+          token: token,
         });
       } else {
         res.json({

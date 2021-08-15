@@ -21,6 +21,7 @@ const obtenerProductos = async (req, res) => {
       } else {
         res.json({
           msg: "producto no encontrado",
+          data: productosDb,
         });
       }
     } else {
