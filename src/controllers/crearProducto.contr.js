@@ -1,5 +1,4 @@
 const axios = require("axios");
-const { JsonWebTokenError } = require("jsonwebtoken");
 const { Producto, Categoria } = require("../db.js");
 const jwt = require("jsonwebtoken");
 
@@ -30,7 +29,6 @@ const crearProducto = async (req, res) => {
           !precio ||
           !decimal ||
           !moneda ||
-          !foto ||
           !estado ||
           !tipoProducto ||
           !fechaAlta ||
