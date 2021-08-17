@@ -11,6 +11,7 @@ const accesoUsuario = async (req, res) => {
         let token = jwt.sign({ password }, "secretKey");
         res.json({
           token: token,
+          msg: "sesion iniciada correctamente",
         });
       } else {
         res.json({

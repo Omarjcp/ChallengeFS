@@ -9,6 +9,15 @@ const obtenerProductosDb = async () => {
   }
 };
 
+const obtenerProductoDbIdCateg = async (id) => {
+  try {
+    let productos = await Producto.findAll({ where: { categoriumId: id } });
+    return productos;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const obtenerCategoriasDb = async () => {
   try {
     let categorias = await Categoria.findAll();
@@ -31,4 +40,5 @@ module.exports = {
   obtenerProductosDb,
   obtenerCategoriasDb,
   obtenerCategoriasIdDb,
+  obtenerProductoDbIdCateg,
 };

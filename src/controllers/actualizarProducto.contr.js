@@ -17,6 +17,7 @@ const actualizarProducto = async (req, res) => {
       fechaAlta,
       categoria,
     } = req.body;
+    console.log(req.body);
 
     jwt.verify(req.token, "secretKey", async (err, data) => {
       if (err) {
@@ -52,15 +53,16 @@ const actualizarProducto = async (req, res) => {
                 //actualizo el producto con la categoria recien creada
                 await Producto.update(
                   {
-                    nombre,
-                    descripcion,
-                    precio,
-                    decimal,
-                    moneda,
-                    foto,
-                    estado,
-                    tipoProducto,
-                    fechaAlta,
+                    nombre: nombre === "" ? productoDb.nombre : nombre,
+                    descripcion:
+                      descripcion === "" ? productoDb.descripcion : descripcion,
+                    precio: precio || productoDb.precio,
+                    decimal: decimal || productoDb.decimal,
+                    moneda: moneda || productoDb.moneda,
+                    foto: foto || productoDb.foto,
+                    estado: estado || productoDb.estado,
+                    tipoProducto: tipoProducto || productoDb.tipoProducto,
+                    fechaAlta: fechaAlta || productoDb.fechaAlta,
                     categoriumId: categoriaCreada.id,
                   },
                   { where: { id } }
@@ -74,15 +76,16 @@ const actualizarProducto = async (req, res) => {
                 //actualizo el producto con la categoria ya existente
                 await Producto.update(
                   {
-                    nombre,
-                    descripcion,
-                    precio,
-                    decimal,
-                    moneda,
-                    foto,
-                    estado,
-                    tipoProducto,
-                    fechaAlta,
+                    nombre: nombre === "" ? productoDb.nombre : nombre,
+                    descripcion:
+                      descripcion === "" ? productoDb.descripcion : descripcion,
+                    precio: precio || productoDb.precio,
+                    decimal: decimal || productoDb.decimal,
+                    moneda: moneda || productoDb.moneda,
+                    foto: foto || productoDb.foto,
+                    estado: estado || productoDb.estado,
+                    tipoProducto: tipoProducto || productoDb.tipoProducto,
+                    fechaAlta: fechaAlta || productoDb.fechaAlta,
                     categoriumId: categoriaDb.id,
                   },
                   { where: { id } }
@@ -97,14 +100,16 @@ const actualizarProducto = async (req, res) => {
               //actualizo el producto sin categoria asociada
               await Producto.update(
                 {
-                  nombre,
-                  descripcion,
-                  precio,
-                  decimal,
-                  moneda,
-                  foto,
-                  estado,
-                  tipoProducto,
+                  nombre: nombre === "" ? productoDb.nombre : nombre,
+                  descripcion:
+                    descripcion === "" ? productoDb.descripcion : descripcion,
+                  precio: precio || productoDb.precio,
+                  decimal: decimal || productoDb.decimal,
+                  moneda: moneda || productoDb.moneda,
+                  foto: foto || productoDb.foto,
+                  estado: estado || productoDb.estado,
+                  tipoProducto: tipoProducto || productoDb.tipoProducto,
+                  fechaAlta: fechaAlta || productoDb.fechaAlta,
                   fechaAlta,
                 },
                 { where: { id } }

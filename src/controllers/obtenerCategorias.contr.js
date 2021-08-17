@@ -1,5 +1,4 @@
 // const { filtradoNombre } = require("./funciones/filtrado");
-const { filtradoNombre } = require("./funciones/filtrado");
 const {
   obtenerCategoriasDb,
   obtenerCategoriasIdDb,

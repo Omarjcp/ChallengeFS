@@ -1,6 +1,9 @@
 const axios = require("axios");
 const { Producto, Categoria } = require("../db");
-const { obtenerProductosDb } = require("./funciones/obtenerDb.js");
+const {
+  obtenerProductosDb,
+  obtenerProductoDbIdCateg,
+} = require("./funciones/obtenerDb.js");
 const { filtradoNombre } = require("./funciones/filtrado.js");
 
 const obtenerProductos = async (req, res) => {
@@ -65,7 +68,31 @@ const obtenerProductoPorId = async (req, res) => {
   }
 };
 
+const obtenerProductoPorIdCategoria = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    let productosDb = await obtenerProductoDbIdCateg(id);
+
+    if (id) {
+      if (productosDb.length > 0) {
+        res.json({
+          tipo: "producto segun id pasado por param",
+          data: productosDb,
+        });
+      } else {
+        res.json({
+          msg: "producto no encontrado",
+        });
+      }
+    }
+  } catch (err) {
+    console.log("error al obtener producto por id", err);
+  }
+};
+
 module.exports = {
   obtenerProductos,
   obtenerProductoPorId,
+  obtenerProductoPorIdCategoria,
 };
