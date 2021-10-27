@@ -16,10 +16,10 @@ const obtenerProductos = async (req, res) => {
       let productosFiltrados = await filtradoNombre(productosDb, name);
 
       if (productosFiltrados.length >= 1) {
-        let primerosCuatro = await productosFiltrados.slice(0, 4);
+        // let primerosCuatro = await productosFiltrados.slice(0, 4);
         res.json({
           tipo: "productos segun el nombre del producto",
-          data: primerosCuatro,
+          data: productosFiltrados,
         });
       } else {
         res.json({

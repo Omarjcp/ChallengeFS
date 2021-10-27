@@ -11,10 +11,6 @@ app.use(cors());
 
 app.use("/", routes);
 
-// app.get("/", (req, res) => {
-//   res.send("hola mundo");
-// });
-
 app.use((err, req, res, next) => {
   const status = err.status || 500;
   const message = err.message || err;
