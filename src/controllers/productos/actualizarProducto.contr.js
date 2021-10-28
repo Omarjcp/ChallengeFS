@@ -1,22 +1,11 @@
-const { Producto, Categoria } = require("../db.js");
+const { Producto, Categoria } = require("../../db");
 const jwt = require("jsonwebtoken");
 
 const actualizarProducto = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const {
-      nombre,
-      descripcion,
-      precio,
-      decimal,
-      moneda,
-      foto,
-      estado,
-      tipoProducto,
-      fechaAlta,
-      categoria,
-    } = req.body;
+    const { nombre, descripcion, foto, estado, categoria } = req.body;
     console.log(req.body);
 
     jwt.verify(req.token, "secretKey", async (err, data) => {
@@ -56,13 +45,8 @@ const actualizarProducto = async (req, res) => {
                     nombre: nombre === "" ? productoDb.nombre : nombre,
                     descripcion:
                       descripcion === "" ? productoDb.descripcion : descripcion,
-                    precio: precio || productoDb.precio,
-                    decimal: decimal || productoDb.decimal,
-                    moneda: moneda || productoDb.moneda,
                     foto: foto || productoDb.foto,
                     estado: estado || productoDb.estado,
-                    tipoProducto: tipoProducto || productoDb.tipoProducto,
-                    fechaAlta: fechaAlta || productoDb.fechaAlta,
                     categoriumId: categoriaCreada.id,
                   },
                   { where: { id } }
@@ -79,13 +63,8 @@ const actualizarProducto = async (req, res) => {
                     nombre: nombre === "" ? productoDb.nombre : nombre,
                     descripcion:
                       descripcion === "" ? productoDb.descripcion : descripcion,
-                    precio: precio || productoDb.precio,
-                    decimal: decimal || productoDb.decimal,
-                    moneda: moneda || productoDb.moneda,
                     foto: foto || productoDb.foto,
                     estado: estado || productoDb.estado,
-                    tipoProducto: tipoProducto || productoDb.tipoProducto,
-                    fechaAlta: fechaAlta || productoDb.fechaAlta,
                     categoriumId: categoriaDb.id,
                   },
                   { where: { id } }
@@ -103,13 +82,8 @@ const actualizarProducto = async (req, res) => {
                   nombre: nombre === "" ? productoDb.nombre : nombre,
                   descripcion:
                     descripcion === "" ? productoDb.descripcion : descripcion,
-                  precio: precio || productoDb.precio,
-                  decimal: decimal || productoDb.decimal,
-                  moneda: moneda || productoDb.moneda,
                   foto: foto || productoDb.foto,
                   estado: estado || productoDb.estado,
-                  tipoProducto: tipoProducto || productoDb.tipoProducto,
-                  fechaAlta: fechaAlta || productoDb.fechaAlta,
                   fechaAlta,
                 },
                 { where: { id } }

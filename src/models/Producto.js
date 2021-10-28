@@ -16,31 +16,11 @@ module.exports = (sequelize) => {
       type: DataTypes.CHAR,
       allowNull: false,
     },
-    precio: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    decimal: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    moneda: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     foto: {
       type: DataTypes.STRING,
     },
     estado: {
-      type: DataTypes.ENUM("publicado", "borrador", "eliminado"),
-      allowNull: false,
-    },
-    tipoProducto: {
-      type: DataTypes.ENUM("nuevo", "usado"),
-      allowNull: false,
-    },
-    fechaAlta: {
-      type: DataTypes.DATE,
+      type: DataTypes.ENUM("hay", "no hay", "consultar disponibilidad"),
       allowNull: false,
     },
   });

@@ -1,10 +1,10 @@
 const axios = require("axios");
-const { Producto, Categoria } = require("../db");
+const { Producto, Categoria } = require("../../db");
 const {
   obtenerProductosDb,
   obtenerProductoDbIdCateg,
-} = require("./funciones/obtenerDb.js");
-const { filtradoNombre } = require("./funciones/filtrado.js");
+} = require("../funciones/obtenerDb");
+const { filtradoNombre } = require("../funciones/filtrado.js");
 
 const obtenerProductos = async (req, res) => {
   try {

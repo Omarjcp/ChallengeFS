@@ -1,4 +1,4 @@
-const { Producto } = require("../db.js");
+const { Producto } = require("../../db");
 const jwt = require("jsonwebtoken");
 
 const eliminarProducto = async (req, res) => {

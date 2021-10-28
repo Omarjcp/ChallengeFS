@@ -1,8 +1,7 @@
-// const { filtradoNombre } = require("./funciones/filtrado");
 const {
   obtenerCategoriasDb,
   obtenerCategoriasIdDb,
-} = require("./funciones/obtenerDb");
+} = require("../funciones/obtenerDb");
 
 const obtenerCategorias = async (req, res) => {
   try {

@@ -1,24 +1,24 @@
 {
-  "name": "challenge",
+  "name": "server",
   "version": "1.0.0",
-  "description": "Challenge full stack",
+  "description": "Server Dulce y salado",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Omarjcp/ChallengeFS.git"
+    "url": "git+https://github.com/Omarjcp/Server-Dulce-Sabor.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Omarjcp/ChallengeFS/issues"
+    "url": "https://github.com/Omarjcp/Server-Dulce-Sabor/issues"
   },
-  "homepage": "https://github.com/Omarjcp/ChallengeFS#readme",
+  "homepage": "https://github.com/Omarjcp/Server-Dulce-Sabor#readme",
   "dependencies": {
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",

@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { Administrador } = require("../db");
+const { Administrador } = require("../../db");
 
 const accesoUsuario = async (req, res) => {
   try {

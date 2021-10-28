@@ -1,21 +1,10 @@
-const axios = require("axios");
-const { Producto, Categoria } = require("../db.js");
+const { Producto, Categoria, Relleno, Sabor } = require("../../db.js");
 const jwt = require("jsonwebtoken");
 
 const crearProducto = async (req, res) => {
   try {
-    const {
-      nombre,
-      descripcion,
-      precio,
-      decimal,
-      moneda,
-      foto,
-      estado,
-      tipoProducto,
-      fechaAlta,
-      categoria,
-    } = req.body;
+    const { nombre, descripcion, foto, estado, categoria, relleno, sabor } =
+      req.body;
 
     jwt.verify(req.token, "secretKey", async (err, data) => {
       if (err) {
@@ -23,17 +12,7 @@ const crearProducto = async (req, res) => {
           msg: "acceso denegado",
         });
       } else {
-        if (
-          !nombre ||
-          !descripcion ||
-          !precio ||
-          !decimal ||
-          !moneda ||
-          !estado ||
-          !tipoProducto ||
-          !fechaAlta ||
-          !categoria
-        ) {
+        if (!nombre || !descripcion || !estado || !foto) {
           return res.status(404).json({
             message: "Todos los campos son obligatorios",
           });
@@ -61,13 +40,8 @@ const crearProducto = async (req, res) => {
               let producto = await Producto.create({
                 nombre,
                 descripcion,
-                precio,
-                decimal,
-                moneda,
                 foto,
                 estado,
-                tipoProducto,
-                fechaAlta,
                 categoriumId: categoriaCreada.id,
               });
               if (producto) {
@@ -79,14 +53,44 @@ const crearProducto = async (req, res) => {
               let producto = await Producto.create({
                 nombre,
                 descripcion,
-                precio,
-                decimal,
-                moneda,
                 foto,
                 estado,
-                tipoProducto,
-                fechaAlta,
                 categoriumId: categoriaFiltrada.id,
+              });
+              if (producto) {
+                res.json({
+                  msg: "producto creado correctamente",
+                });
+              }
+            }
+          } else if (relleno) {
+            let rellenoEnDb = await Relleno.findOne({
+              where: { nombre: relleno },
+            });
+            if (!rellenoEnDb) {
+              let rellenoCreado = await Relleno.create({
+                nombre: relleno,
+              });
+
+              let producto = await Producto.create({
+                nombre,
+                descripcion,
+                foto,
+                estado,
+                rellenoId: rellenoCreado.id,
+              });
+              if (producto) {
+                res.json({
+                  msg: "producto creado correctamente",
+                });
+              }
+            } else {
+              let producto = await Producto.create({
+                nombre,
+                descripcion,
+                foto,
+                estado,
+                rellenoId: rellenoEnDb.id,
               });
               if (producto) {
                 res.json({

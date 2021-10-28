@@ -1,13 +1,15 @@
 const { Router } = require("express");
 
-const actualizarProducto = require("../controllers/actualizarProducto.contr.js");
-const { crearProducto } = require("../controllers/crearProducto.contr.js");
-const eliminarProducto = require("../controllers/eliminarProducto.contr.js");
+const actualizarProducto = require("../controllers/productos/actualizarProducto.contr.js");
+const {
+  crearProducto,
+} = require("../controllers/productos/crearProducto.contr.js");
+const eliminarProducto = require("../controllers/productos/eliminarProducto.contr.js");
 const {
   obtenerProductos,
   obtenerProductoPorId,
   obtenerProductoPorIdCategoria,
-} = require("../controllers/obtenerProductos.contr.js");
+} = require("../controllers/productos/obtenerProductos.contr.js");
 const midDelToken = require(".././controllers/funciones/comprobacionToken");
 
 const router = Router();
