@@ -5,7 +5,8 @@ const actualizarProducto = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { nombre, descripcion, foto, estado, categoria } = req.body;
+    const { nombre, descripcion, foto, estado, categoria, relleno, sabor } =
+      req.body;
     console.log(req.body);
 
     jwt.verify(req.token, "secretKey", async (err, data) => {

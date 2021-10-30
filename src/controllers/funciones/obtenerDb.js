@@ -9,10 +9,18 @@ const obtenerProductosDb = async () => {
   }
 };
 
-const obtenerProductoDbIdCateg = async (id) => {
+const obtenerProductoDbIdCateg = async (catg, id) => {
   try {
-    let productos = await Producto.findAll({ where: { categoriumId: id } });
-    return productos;
+    if (catg === "categoria") {
+      let productos = await Producto.findAll({ where: { categoriumId: id } });
+      return productos;
+    } else if (catg === "relleno") {
+      let productos = await Producto.findAll({ where: { rellenoId: id } });
+      return productos;
+    } else {
+      let productos = await Producto.findAll({ where: { saborId: id } });
+      return productos;
+    }
   } catch (err) {
     console.log(err);
   }

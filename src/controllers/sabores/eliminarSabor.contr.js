@@ -1,7 +1,7 @@
-const { Relleno } = require("../../db");
+const { Sabor } = require("../../db");
 const jwt = require("jsonwebtoken");
 
-const eliminarRelleno = async (req, res) => {
+const eliminarSabor = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -12,32 +12,28 @@ const eliminarRelleno = async (req, res) => {
         });
       } else {
         if (id) {
-          let rellenoDb = await Relleno.findOne({
+          const saborEnDb = await Sabor.findOne({
             where: { id: id },
           });
 
-          if (rellenoDb) {
-            await Relleno.destroy({
+          if (saborEnDb) {
+            await Sabor.destroy({
               where: { id: id },
             });
             res.json({
-              msg: "Relleno eliminado correctamente",
+              msg: "Sabor eliminado correctamente",
             });
           } else {
             res.json({
-              msg: "Relleno no existente",
+              msg: "Sabor no encontrado en la Db",
             });
           }
-        } else {
-          res.json({
-            msg: "Id de relleno no recibido",
-          });
         }
       }
     });
   } catch (err) {
-    console.log("error al eliminar relleno", err);
+    console.log("error al eliminar sabor", err);
   }
 };
 
-module.exports = eliminarRelleno;
+module.exports = eliminarSabor;

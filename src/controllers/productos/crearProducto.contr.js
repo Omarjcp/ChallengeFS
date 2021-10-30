@@ -28,76 +28,36 @@ const crearProducto = async (req, res) => {
             msg: "Este producto ya existente",
           });
         } else {
-          if (categoria) {
+          if (categoria || relleno || sabor) {
             let categoriaFiltrada = await Categoria.findOne({
               where: { nombre: categoria },
             });
-            if (!categoriaFiltrada) {
-              const categoriaCreada = await Categoria.create({
-                nombre: categoria,
-              });
-
-              let producto = await Producto.create({
-                nombre,
-                descripcion,
-                foto,
-                estado,
-                categoriumId: categoriaCreada.id,
-              });
-              if (producto) {
-                res.json({
-                  msg: "producto creado correctamente",
-                });
-              }
-            } else {
-              let producto = await Producto.create({
-                nombre,
-                descripcion,
-                foto,
-                estado,
-                categoriumId: categoriaFiltrada.id,
-              });
-              if (producto) {
-                res.json({
-                  msg: "producto creado correctamente",
-                });
-              }
-            }
-          } else if (relleno) {
-            let rellenoEnDb = await Relleno.findOne({
+            let rellenoFiltrado = await Relleno.findOne({
               where: { nombre: relleno },
             });
-            if (!rellenoEnDb) {
-              let rellenoCreado = await Relleno.create({
-                nombre: relleno,
+            let saborFiltrado = await Sabor.findOne({
+              where: { nombre: sabor },
+            });
+            if (categoriaFiltrada || rellenoFiltrado || saborFiltrado) {
+              let producto = await Producto.create({
+                nombre,
+                descripcion,
+                foto,
+                estado,
+                categoriumId: categoriaFiltrada?.id,
+                rellenoId: rellenoFiltrado?.id,
+                saborId: saborFiltrado?.id,
               });
 
-              let producto = await Producto.create({
-                nombre,
-                descripcion,
-                foto,
-                estado,
-                rellenoId: rellenoCreado.id,
+              res.json({
+                msg: "Producto creado correctamente",
+                data: producto,
               });
-              if (producto) {
-                res.json({
-                  msg: "producto creado correctamente",
-                });
-              }
-            } else {
-              let producto = await Producto.create({
-                nombre,
-                descripcion,
-                foto,
-                estado,
-                rellenoId: rellenoEnDb.id,
-              });
-              if (producto) {
-                res.json({
-                  msg: "producto creado correctamente",
-                });
-              }
             }
+          } else {
+            res.json({
+              msg: "El producto debe estar asosiado a una categoria, sabor o relleno",
+            });
           }
         }
       }
