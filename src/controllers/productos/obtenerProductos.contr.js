@@ -3,7 +3,6 @@ const { Producto, Categoria } = require("../../db");
 const {
   obtenerProductosDb,
   obtenerProductoDbIdCateg,
-  obtenerProductoDbIdRelleno,
 } = require("../funciones/obtenerDb");
 const { filtradoNombre } = require("../funciones/filtrado.js");
 
@@ -76,55 +75,7 @@ const obtenerProductoPorId = async (req, res) => {
   }
 };
 
-// const obtenerProductoPorIdCategoria = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-
-//     let productosDb = await obtenerProductoDbIdCateg(id);
-
-//     if (id) {
-//       if (productosDb.length > 0) {
-//         res.json({
-//           tipo: "producto segun id pasado por param",
-//           data: productosDb,
-//         });
-//       } else {
-//         res.json({
-//           msg: "producto no encontrado",
-//         });
-//       }
-//     }
-//   } catch (err) {
-//     console.log("error al obtener producto por id", err);
-//   }
-// };
-
-// const obtenerProductoPorIdRelleno = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-
-//     let productosDb = await obtenerProductoDbIdRelleno(id);
-
-//     if (id) {
-//       if (productosDb.length > 0) {
-//         res.json({
-//           tipo: "producto segun id de relleno pasado por param",
-//           data: productosDb,
-//         });
-//       } else {
-//         res.json({
-//           msg: "producto no encontrado",
-//         });
-//       }
-//     }
-//   } catch (err) {
-//     console.log("error al obtener producto por id", err);
-//   }
-// };
-
 module.exports = {
   obtenerProductos,
   obtenerProductoPorId,
-  // obtenerProductoPorIdCategoria,
-  // obtenerProductoPorIdRelleno,
 };

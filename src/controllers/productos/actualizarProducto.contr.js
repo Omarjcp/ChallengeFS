@@ -1,4 +1,4 @@
-const { Producto, Categoria } = require("../../db");
+const { Producto, Categoria, Relleno, Sabor } = require("../../db");
 const jwt = require("jsonwebtoken");
 
 const actualizarProducto = async (req, res) => {
@@ -28,70 +28,64 @@ const actualizarProducto = async (req, res) => {
             });
             //si existe el producto
           } else {
-            //si recibo categoria
-            if (categoria) {
+            //si recibo categoria, relleno o sabor
+            if (categoria || relleno || sabor) {
               //busco en la DB
               let categoriaDb = await Categoria.findOne({
                 where: { nombre: categoria },
               });
-              //si no existe la categoria en la DB
-              if (!categoriaDb) {
-                //creo la categoiria
-                let categoriaCreada = await Categoria.create({
-                  nombre: categoria,
-                });
-                //actualizo el producto con la categoria recien creada
-                await Producto.update(
-                  {
-                    nombre: nombre === "" ? productoDb.nombre : nombre,
-                    descripcion:
-                      descripcion === "" ? productoDb.descripcion : descripcion,
-                    foto: foto || productoDb.foto,
-                    estado: estado || productoDb.estado,
-                    categoriumId: categoriaCreada.id,
-                  },
-                  { where: { id } }
-                );
 
+              let rellenoDb = await Relleno.findOnd({
+                where: { nombre: relleno },
+              });
+
+              let saborDb = await Sabor.findOne({
+                where: { nombre: sabor },
+              });
+              //si no existe la categoria en la DB
+              if (!categoriaDb || !rellenoDb || !saborDb) {
                 res.json({
-                  msg: "Producto actualizado, y categoria creada correctamente",
+                  msg: "Categoria no existente en la DB.",
                 });
                 //si existe la categoria en la DB
               } else {
                 //actualizo el producto con la categoria ya existente
-                await Producto.update(
+                let productoActualizado = await Producto.update(
                   {
                     nombre: nombre === "" ? productoDb.nombre : nombre,
                     descripcion:
                       descripcion === "" ? productoDb.descripcion : descripcion,
                     foto: foto || productoDb.foto,
                     estado: estado || productoDb.estado,
-                    categoriumId: categoriaDb.id,
+                    categoriumId: categoriaDb?.id,
+                    rellenoId: rellenoDb?.id,
+                    saborId: saborDb?.id,
                   },
                   { where: { id } }
                 );
 
                 res.json({
                   msg: "Producto actualizado correctamente",
+                  data: productoActualizado,
                 });
               }
               //si no recibo la categoria
             } else {
               //actualizo el producto sin categoria asociada
-              await Producto.update(
+              let productoActualizado = await Producto.update(
                 {
                   nombre: nombre === "" ? productoDb.nombre : nombre,
                   descripcion:
                     descripcion === "" ? productoDb.descripcion : descripcion,
                   foto: foto || productoDb.foto,
                   estado: estado || productoDb.estado,
-                  fechaAlta,
                 },
                 { where: { id } }
               );
 
               res.json({
                 msg: "Producto actualizado correctamente",
+                data: productoActualizado,
               });
             }
           }
