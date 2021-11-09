@@ -29,24 +29,35 @@ const crearProducto = async (req, res) => {
           });
         } else {
           if (categoria || relleno || sabor) {
-            let categoriaFiltrada = await Categoria.findOne({
-              where: { nombre: categoria },
-            });
-            let rellenoFiltrado = await Relleno.findOne({
-              where: { nombre: relleno },
-            });
-            let saborFiltrado = await Sabor.findOne({
-              where: { nombre: sabor },
-            });
-            if (categoriaFiltrada || rellenoFiltrado || saborFiltrado) {
+            if (categoria) {
+              var categoriaFiltradaCreate = await Categoria.findOne({
+                where: { nombre: categoria },
+              });
+            }
+            if (relleno) {
+              var rellenoFiltradoCreate = await Relleno.findOne({
+                where: { nombre: relleno },
+              });
+            }
+            if (sabor) {
+              var saborFiltradoCreate = await Sabor.findOne({
+                where: { nombre: sabor },
+              });
+            }
+
+            if (
+              categoriaFiltradaCreate ||
+              rellenoFiltradoCreate ||
+              saborFiltradoCreate
+            ) {
               let producto = await Producto.create({
                 nombre,
                 descripcion,
                 foto,
                 estado,
-                categoriumId: categoriaFiltrada?.id,
-                rellenoId: rellenoFiltrado?.id,
-                saborId: saborFiltrado?.id,
+                categoriumId: categoriaFiltradaCreate?.id,
+                rellenoId: rellenoFiltradoCreate?.id,
+                saborId: saborFiltradoCreate?.id,
               });
 
               res.json({

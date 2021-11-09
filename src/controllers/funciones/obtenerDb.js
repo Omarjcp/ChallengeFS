@@ -9,22 +9,16 @@ const obtenerProductosDb = async () => {
   }
 };
 
-const obtenerProductoDbIdCateg = async (catg, id) => {
-  try {
-    if (catg === "categoria") {
-      let productos = await Producto.findAll({ where: { categoriumId: id } });
-      return productos;
-    } else if (catg === "relleno") {
-      let productos = await Producto.findAll({ where: { rellenoId: id } });
-      return productos;
-    } else {
-      let productos = await Producto.findAll({ where: { saborId: id } });
-      return productos;
-    }
-  } catch (err) {
-    console.log(err);
-  }
-};
+// const obtenerProductoDbIdCateg = async (catg, id) => {
+//   try {
+//       let productos = await Producto.findAll({ where: {
+//         categoriumId: id,
+//        } });
+//       return productos;
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
 
 const obtenerCategoriasDb = async () => {
   try {
@@ -48,5 +42,5 @@ module.exports = {
   obtenerProductosDb,
   obtenerCategoriasDb,
   obtenerCategoriasIdDb,
-  obtenerProductoDbIdCateg,
+  // obtenerProductoDbIdCateg,
 };

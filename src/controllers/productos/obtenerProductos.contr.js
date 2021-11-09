@@ -1,14 +1,11 @@
-const axios = require("axios");
 const { Producto, Categoria } = require("../../db");
-const {
-  obtenerProductosDb,
-  obtenerProductoDbIdCateg,
-} = require("../funciones/obtenerDb");
+const { obtenerProductosDb } = require("../funciones/obtenerDb");
 const { filtradoNombre } = require("../funciones/filtrado.js");
 
 const obtenerProductos = async (req, res) => {
   try {
-    let { name, categoria, relleno, sabor, id } = req.query;
+    let { name, categoria, relleno, sabor, categoryId, rellenoId, saborId } =
+      req.query;
 
     let productosDb = await obtenerProductosDb();
 
@@ -25,8 +22,47 @@ const obtenerProductos = async (req, res) => {
           msg: "producto no encontrado",
         });
       }
-    } else if (categoria && id) {
-      let productosDb = await obtenerProductoDbIdCateg(categoria, id);
+    }
+    if (categoryId) {
+      let productosDb = await Producto.findAll({
+        where: {
+          categoriumId: categoryId ? categoryId : null,
+        },
+      });
+      if (productosDb.length > 0) {
+        res.json({
+          tipo: "producto segun id de categoria pasado por param",
+          data: productosDb,
+        });
+      } else {
+        res.json({
+          msg: "producto no encontrado",
+        });
+      }
+    }
+    if (rellenoId) {
+      let productosDb = await Producto.findAll({
+        where: {
+          rellenoId: rellenoId ? rellenoId : null,
+        },
+      });
+      if (productosDb.length > 0) {
+        res.json({
+          tipo: "producto segun id de categoria pasado por param",
+          data: productosDb,
+        });
+      } else {
+        res.json({
+          msg: "producto no encontrado",
+        });
+      }
+    }
+    if (saborId) {
+      let productosDb = await Producto.findAll({
+        where: {
+          saborId: saborId ? saborId : null,
+        },
+      });
       if (productosDb.length > 0) {
         res.json({
           tipo: "producto segun id de categoria pasado por param",
