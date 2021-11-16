@@ -35,7 +35,7 @@ const actualizarProducto = async (req, res) => {
                 where: { nombre: categoria },
               });
 
-              let rellenoDb = await Relleno.findOnd({
+              let rellenoDb = await Relleno.findOne({
                 where: { nombre: relleno },
               });
 
@@ -50,7 +50,7 @@ const actualizarProducto = async (req, res) => {
                 //si existe la categoria en la DB
               } else {
                 //actualizo el producto con la categoria ya existente
-                let productoActualizado = await Producto.update(
+                await Producto.update(
                   {
                     nombre: nombre === "" ? productoDb.nombre : nombre,
                     descripcion:
@@ -66,13 +66,12 @@ const actualizarProducto = async (req, res) => {
 
                 res.json({
                   msg: "Producto actualizado correctamente",
-                  data: productoActualizado,
                 });
               }
               //si no recibo la categoria
             } else {
               //actualizo el producto sin categoria asociada
-              let productoActualizado = await Producto.update(
+              await Producto.update(
                 {
                   nombre: nombre === "" ? productoDb.nombre : nombre,
                   descripcion:
@@ -85,7 +84,6 @@ const actualizarProducto = async (req, res) => {
 
               res.json({
                 msg: "Producto actualizado correctamente",
-                data: productoActualizado,
               });
             }
           }
