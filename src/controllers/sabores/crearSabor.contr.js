@@ -12,24 +12,14 @@ const crearSabor = async (req, res) => {
         });
       } else {
         if (nombre) {
-          const saborEnDb = await Sabor.findOne({
-            where: { nombre: nombre },
+          const saborCreado = await Sabor.create({
+            nombre: nombre,
           });
 
-          if (saborEnDb) {
+          if (saborCreado) {
             res.json({
-              msg: "Este sabor ya existe",
+              msg: "sabor creado correctamente",
             });
-          } else {
-            const saborCreado = await Sabor.create({
-              nombre: nombre,
-            });
-
-            if (saborCreado) {
-              res.json({
-                msg: "sabor creado correctamente",
-              });
-            }
           }
         } else {
           res.json({

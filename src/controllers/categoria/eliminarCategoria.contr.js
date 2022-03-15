@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const { Categoria } = require("../../db");
 
 const eliminarCategoria = async (req, res) => {
