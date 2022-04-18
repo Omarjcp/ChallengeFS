@@ -73,9 +73,10 @@ const actualizarProducto = async (req, res) => {
               //actualizo el producto sin categoria asociada
               await Producto.update(
                 {
-                  nombre: nombre === "" ? productoDb.nombre : nombre,
-                  descripcion:
-                    descripcion === "" ? productoDb.descripcion : descripcion,
+                  nombre: nombre ? nombre : productoDb.nombre,
+                  descripcion: descripcion
+                    ? descripcion
+                    : productoDb.descripcion,
                   foto: foto || productoDb.foto,
                   estado: estado || productoDb.estado,
                 },
