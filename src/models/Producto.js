@@ -13,11 +13,11 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     descripcion: {
-      type: DataTypes.CHAR,
+      type: DataTypes.STRING(1234),
       allowNull: false,
     },
     foto: {
-      type: DataTypes.CHAR,
+      type: DataTypes.STRING(1234),
     },
     estado: {
       type: DataTypes.ENUM("hay", "no hay", "consultar disponibilidad"),
