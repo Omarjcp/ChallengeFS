@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     foto: {
-      type: DataTypes.STRING,
+      type: DataTypes.CHAR,
     },
     estado: {
       type: DataTypes.ENUM("hay", "no hay", "consultar disponibilidad"),
